@@ -17,6 +17,7 @@ if st.button("Save cycle start date"):
         st.session_state.starts.append(new_start)
         st.success(f"Cycle start date {new_start} saved!")
 
+st.write("Data for demo cycle in days: 38, 52, 31, 64, 41, 29, 47, 58")
 if st.button("Load demo data:"):
     gaps = [38, 52, 31, 64, 41, 29, 47, 58] # cycle length in days example
     starts = [date.today() - timedelta(days=20)]  # starting point for demo data
@@ -24,7 +25,7 @@ if st.button("Load demo data:"):
         starts.insert(0, starts[0] - timedelta(days=gap))
         st.session_state.starts = starts
 
-st.write(f"Cycles logged: {len(st.session_state.starts)}")
+st.write(f"Periods logged: {len(st.session_state.starts)}")
 
 st.header("My pattern")
 starts = st.session_state.starts
@@ -41,7 +42,7 @@ else:
     earliest, latest = logic.next_window(starts, lengths)
     st.info(f"Your next cycle is likely between {earliest} and {latest} based on your logged cycles.")
 
-    near_28 = len([n for n in lengths if abs(n - 28) <= 3])
+    near_28 = len([n for n in lengths if abs(n - 28) <= 2])
     st.write(f"Only {near_28} of your {len(lengths)} cycles were within 2 days of the typical 28-day cycle.")
     st.bar_chart({"Cycle length (days)":lengths})
     for note in logic.flags(lengths):
