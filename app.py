@@ -9,8 +9,7 @@ if "starts" not in st.session_state:
     st.session_state.starts = []    # createes a list to store the start dates of cycles
 
 st.header("Log your cycle")
-new_start = st.date_input("Enter the start date of your cycle:", value=date.today())
-max_value = date.today()
+new_start = st.date_input("Enter the start date of your cycle:", value=date.today(), max_value=date.today())
 if st.button("Save cycle start date"):
     if new_start in st.session_state.starts:
         st.warning("This start date has already been logged.")
@@ -78,13 +77,16 @@ st.header("Ask Beyond28")
 question = st.text_input("Ask a question about your cycle.")
 if st.button("Ask") and question:
     try:
-        from google import genai
-        client = genai.Client(api_key=st.secrets["lItDQPbRWYnUg"])
-        reply = client.models.generate_content(
-            model="gemini-flash-latest",
-            contents=question,
-            config={"system_instruction": "You give general health information about periods, irregular period cycles and PMOS (formerly PCOS). NEVER diagnose. Suggest a GP when relevant. Under 120 words."}
+        from openai import OpenAI
+        
+        client = OpenAI(api_key=st.secrets["DEEPSEEK_API_KEY"], base_url="https://api.deepseek.com")
+        reply = client.chat.completions.create(
+            model="deepseek-flash",
+            messages=[
+                {"role": "system", "content": "You only give general health information about periods, irregular cycles, and PMOS (formerly PCOS). YOu never diagnose or provide diagnosis. Suggest a GP when relevant. ALways under 120 or less."},
+                {"role": "user", "content": question}
+            ],
         )
-        st.write(reply.text)
+        st.write(reply.choices[0].message.content)
     except Exception as error:
         st.error(f"Error: ({type(error).__name__}). Please API key and try again.")
