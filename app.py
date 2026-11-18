@@ -72,3 +72,19 @@ if len(lengths) > 0:
     st.download_button("Download summary (.txt)", text, file_name="gp-summary.txt")
 else:
     st.write("Please log two periods to make a summary.")
+
+# chatbot
+st.header("Ask Beyond28")
+question = st.text_input("Ask a question about your cycle.")
+if st.button("Ask") and question:
+    try:
+        from google import genai
+        client = genai.Client(api_key=st.secrets["lItDQPbRWYnUg"])
+        reply = client.models.generate_content(
+            model="gemini-flash-latest",
+            contents=question,
+            config={"system_instruction": "You give general health information about periods, irregular period cycles and PMOS (formerly PCOS). NEVER diagnose. Suggest a GP when relevant. Under 120 words."}
+        )
+        st.write(reply.text)
+    except Exception as error:
+        st.error(f"Error: ({type(error).__name__}). Please API key and try again.")
