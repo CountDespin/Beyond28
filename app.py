@@ -66,3 +66,9 @@ if len(lengths) > 0:
     text = "Cycle summary\n\n"
     text += f"Cycles logged: {s['count']}\n"
     text += f"Average {s['average']} days, shortest {s['shortest']}, longest {s['longest']}\n"
+    text += "Cycle lengths: " + ", ".join(str(n) for n in lengths) + "\n\n"
+    for note in logic.flags(lengths):
+        text += "- " + note + "\n"
+    st.download_button("Download summary (.txt)", text, file_name="gp-summary.txt")
+else:
+    st.write("Please log two periods to make a summary.")
