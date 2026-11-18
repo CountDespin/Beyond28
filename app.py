@@ -59,3 +59,10 @@ st.header("How are you feeling today?")
 feeling = st.selectbox("Pick one", list(TIPS))
 for tip in TIPS[feeling]:
     st.write("- " + tip)
+
+# summary for the GP
+st.header("Summary for your GP")
+if len(lengths) > 0:
+    text = "Cycle summary\n\n"
+    text += f"Cycles logged: {s['count']}\n"
+    text += f"Average {s['average']} days, shortest {s['shortest']}, longest {s['longest']}\n"
