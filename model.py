@@ -15,7 +15,7 @@ from sklearn.ensemble import AdaBoostClassifier
 import warnings
 warnings.filterwarnings('ignore')
 
-filepath = "../input/polycystic-ovary-syndrome-pcos/PCOS_data_without_infertility.xlsx"
+filepath = "data/PCOS_data_without_infertility.xlsx"
 
 df = pd.read_excel(filepath,sheet_name="Full_new")
 
