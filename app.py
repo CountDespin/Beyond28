@@ -26,3 +26,16 @@ if st.button("Load demo data:"):
         st.session_state.starts = starts
 
 st.write(f"Cycles logged: {len(st.session_state.starts)}")
+
+st.header("My pattern")
+starts = st.session_state.starts
+lengths = logic.cycle_lengths(starts)
+
+if len(lengths) == 0:
+    st.write("Please log at least two cycle start dates to see your pattern.")
+else:
+    s = logic.summary(lengths)
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Cycles", s["count"])
+    col2.metric("Average length", f"{s['average']} days")
+    col3.metric("Range", f"{s['shortest']} - {s['longest']} days")

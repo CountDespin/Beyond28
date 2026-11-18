@@ -24,3 +24,6 @@ def next_window(starts, lengths):
     earliest = last + timedelta(days=min(lengths))
     latest = last + timedelta(days=max(lengths))
     return earliest, latest
+
+def flags(lengths):
+    # for the GP pdf form return later, come back to this
