@@ -15,7 +15,7 @@ from sklearn.ensemble import AdaBoostClassifier
 import warnings
 warnings.filterwarnings('ignore')
 
-filepath = "data/PCOS_data_without_infertility.xlsx"
+filepath = "../input/polycystic-ovary-syndrome-pcos/PCOS_data_without_infertility.xlsx"
 
 df = pd.read_excel(filepath,sheet_name="Full_new")
 
@@ -420,17 +420,18 @@ for column in new_patient:
     if column not in exclude_columns and column in means.index:
         new_patient[column] = means[column]
 
-for i in exclude_columns:
-    new_patient[i]=float(input(f"Insert {i}: "))
+if __name__ == "__main__":
+    for i in exclude_columns:
+        new_patient[i]=float(input(f"Insert {i}: "))
 
-prediction, probability = predict_pcos(model, scaler, feature_names, new_patient)
-    
-print(f"\nPCOS Prediction: {prediction}")
-print(f"Confidence: {probability*100:.2f}%")
+    prediction, probability = predict_pcos(model, scaler, feature_names, new_patient)
+        
+    print(f"\nPCOS Prediction: {prediction}")
+    print(f"Confidence: {probability*100:.2f}%")
 
-if prediction == "Yes":
-    print("\n⚠️ OH HELL NAW\nThe patient shows indicators of PCOS.")
-    print("Recommendation: Consult with a healthcare professional for proper diagnosis.")
-else:
-    print("\n✓ The patient shows low indicators of PCOS.")
-    print("Recommendation: Continue regular health monitoring.")
+    if prediction == "Yes":
+        print("\n⚠️ OH HELL NAW\nThe patient shows indicators of PCOS.")
+        print("Recommendation: Consult with a healthcare professional for proper diagnosis.")
+    else:
+        print("\n✓ The patient shows low indicators of PCOS.")
+        print("Recommendation: Continue regular health monitoring.")
