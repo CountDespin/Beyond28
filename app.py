@@ -19,7 +19,7 @@ if st.button("Save cycle start date"):
         st.success(f"Cycle start date {new_start} saved!")
 
 if st.button("Load demo data:"):
-    gaps = [28, 30, 32, 29, 31, 27, 33, 28, 30, 29] # cycle length in days example
+    gaps = [38, 52, 31, 64, 41, 29, 47, 58] # cycle length in days example
     starts = [date.today() - timedelta(days=20)]  # starting point for demo data
     for gap in reversed(gaps):
         starts.insert(0, starts[0] - timedelta(days=gap))
