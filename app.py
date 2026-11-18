@@ -39,3 +39,11 @@ else:
     col1.metric("Cycles", s["count"])
     col2.metric("Average length", f"{s['average']} days")
     col3.metric("Range", f"{s['shortest']} - {s['longest']} days")
+    earliest, latest = logic.next_window(starts, lengths)
+    st.info("Your next cycle is likely between {earliest:%d %b} and {latest: %d %b} based on your logged cycles.")
+
+    near_28 = len([n for n in lengths if abs(n - 28) <= 3])
+    st.write(f"Only {near_28} of your {len(lengths)} cycles were within 2 days of the typical 28-day cycle.")
+    st.bar_chart({"Cycle length (days)":lengths})
+    for note in logic.flags(lengths):
+        st.warning(note + "Please discuss with your GP if you have any concerns.")
