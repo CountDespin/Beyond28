@@ -40,10 +40,22 @@ else:
     col2.metric("Average length", f"{s['average']} days")
     col3.metric("Range", f"{s['shortest']} - {s['longest']} days")
     earliest, latest = logic.next_window(starts, lengths)
-    st.info("Your next cycle is likely between {earliest:%d %b} and {latest: %d %b} based on your logged cycles.")
+    st.info(f"Your next cycle is likely between {earliest} and {latest} based on your logged cycles.")
 
     near_28 = len([n for n in lengths if abs(n - 28) <= 3])
     st.write(f"Only {near_28} of your {len(lengths)} cycles were within 2 days of the typical 28-day cycle.")
     st.bar_chart({"Cycle length (days)":lengths})
     for note in logic.flags(lengths):
         st.warning(note + "Please discuss with your GP if you have any concerns.")
+
+# tips based on mood
+TIPS = {
+    "Cramps": ["Try a warm compress or heating pad on your lower abdomen. Light exercise, like yoga, can also help relieve cramps."],
+    "Tiredness": ["Try to maintain regular sleep and wake times. Light exercise can boost your energy levels. Consider a balanced diet rich in iron and vitamins."],
+    "Low mood": ["Talk to someone you trust about how you're feeling. Engage in activities that you enjoy and that make you feel good. If low mood persists, consider seeking professional help."],
+    "Good mood": ["Keep up the good work! Continue engaging in activities and habits that make you feel happy and fulfilled."],
+}
+st.header("How are you feeling today?")
+feeling = st.selectbox("Pick one", list(TIPS))
+for tip in TIPS[feeling]:
+    st.write("- " + tip)
