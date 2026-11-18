@@ -8,9 +8,9 @@ st.write("Cycle tracking for women who may experience cycle irregularities.")
 if "starts" not in st.session_state:
     st.session_state.starts = []    # createes a list to store the start dates of cycles
 
-st.header("Log your cycle")
-new_start = st.date_input("Enter the start date of your cycle:", value=date.today(), max_value=date.today())
-if st.button("Save cycle start date"):
+st.header("Log a period")
+new_start = st.date_input("Enter the start date of your period:", value=date.today(), max_value=date.today())
+if st.button("Save period start date"):
     if new_start in st.session_state.starts:
         st.warning("This start date has already been logged.")
     else:
@@ -37,13 +37,13 @@ else:
     s = logic.summary(lengths)
     col1, col2, col3 = st.columns(3)
     col1.metric("Cycles", s["count"])
-    col2.metric("Average length", f"{s['average']} days")
+    col2.metric("Average cycle length", f"{s['average']} days")
     col3.metric("Range", f"{s['shortest']} - {s['longest']} days")
     earliest, latest = logic.next_window(starts, lengths)
-    st.info(f"Your next cycle is likely between {earliest} and {latest} based on your logged cycles.")
+    st.info(f"Your next period is likely between {earliest} and {latest} based on your logged cycles.")
 
     near_28 = len([n for n in lengths if abs(n - 28) <= 2])
-    st.write(f"Only {near_28} of your {len(lengths)} cycles were within 2 days of the typical 28-day cycle.")
+    st.write(f"Only {near_28} of your {len(lengths)} cycles were within 2 days of the textbook 28-day cycle.")
     st.bar_chart({"Cycle length (days)":lengths})
     for note in logic.flags(lengths):
         st.warning(note + "Please discuss with your GP if you have any concerns.")
