@@ -48,7 +48,7 @@ else:
     for note in logic.flags(lengths):
         st.warning(note + "Please discuss with your GP if you have any concerns.")
 
-# tips based on mood
+# tips based on mood, all advice is from NHS ()
 TIPS = {
     "Cramps": ["Try a warm compress or heating pad on your lower abdomen. Light exercise, like yoga, can also help relieve cramps."],
     "Tiredness": ["Try to maintain regular sleep and wake times. Light exercise can boost your energy levels. Consider a balanced diet rich in iron and vitamins."],

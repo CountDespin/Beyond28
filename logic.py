@@ -25,5 +25,13 @@ def next_window(starts, lengths):
     latest = last + timedelta(days=max(lengths))
     return earliest, latest
 
-# def flags(lengths):
-    # for the GP pdf form return later, come back to this
+def flags(lengths):
+    # return a list of flags based on cycle lengths thats worth mentioning to GP
+    notes = []
+    long_ones = [n for n in lengths if n > 35]
+    short_ones = [n for n in lengths if n < 21]
+    if long_ones:
+        notes.append(f"{len(long_ones)} of {len(lengths)} cycles were longer than 35 days.")
+    if short_ones:
+        notes.append(f"{len(short_ones)} of {len(lengths)} cycles were shorter than 21 days.")
+    return notes
